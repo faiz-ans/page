@@ -10,9 +10,15 @@
 			background-color: black;
 			font-family: 'Avenir Next','Segoe ui',sans-serif;
 		}
-		canvas { 
-			display: block; 
-		}
+
+        #canvas-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden; /* Ensure the container does not overflow */
+        }
 
 		main {
 			display: flex;
@@ -60,9 +66,8 @@
 
 		span {
 			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translateX(-50%) translateY(-50%);
+			margin-top: 6em;
+			margin-left: 1em;
 			z-index: 0;
 			white-space: nowrap;
 			color: grey;
@@ -85,6 +90,7 @@
 	</style>
 </head>
 <body>
+	<div id="canvas-container"></div>
 	<main>
 		<h1>Faiz Ansari</h1>
 		<a href="https://github.com/fezimsorry" target="_blank">a sparsely used <strong>GitHub</strong></a>
@@ -93,17 +99,21 @@
 	<span>//work in progress</span>	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
+		// Select the canvas container
+		const container = document.getElementById('canvas-container');
+
         // Initialize the scene, camera, and renderer
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(renderer.domElement);
+		container.appendChild(renderer.domElement);
+        //document.body.appendChild(renderer.domElement);
 
         // Create materials for the helix strands (red, white, green)
-        const redMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+        const redMaterial = new THREE.MeshBasicMaterial({ color: 0xee2a35 });
         const whiteMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
-        const greenMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+        const greenMaterial = new THREE.MeshBasicMaterial({ color: 0x009736 });
 
         // Parameters for the helix
         const helixRadius = 1;
@@ -123,7 +133,7 @@
         function createHelix() {
             for (let i = 0; i < numPoints; i++) {
                 const angle = i * 0.2; // Angle to control rotation of the helix
-                const y = i * helixSpacing; // Move up along the Y-axis
+                const y = i * helixSpacing - 2; // Move up along the Y-axis
 
                 // Calculate positions for the three strands
                 const x1 = helixRadius * Math.cos(angle); // Red strand
