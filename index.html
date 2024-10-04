@@ -116,7 +116,7 @@
         // Parameters for the helix
         const helixRadius = 1;
         const helixHeight = 0.2;
-        const numPoints = 100; // Points per strand
+        const numPoints = 200; // Points per strand
         const helixSpacing = 0.15; // Spacing between helix loops
 
         // Function to create a sphere at a given position
@@ -131,7 +131,7 @@
         function createHelix() {
             for (let i = 0; i < numPoints; i++) {
                 const angle = i * 0.2; // Angle to control rotation of the helix
-                const y = i * helixSpacing - 1.5; // Move up along the Y-axis
+                const y = i * helixSpacing - 3; // Move up along the Y-axis
 
                 // Calculate positions for the three strands
                 const x1 = helixRadius * Math.cos(angle); // Red strand
