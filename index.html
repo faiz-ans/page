@@ -6,18 +6,15 @@
 	<title>Faiz Ansari - Developer</title>
 
 	<style type="text/css">
-		body {
+		html, body {
 			background-color: black;
 			font-family: 'Avenir Next','Segoe ui',sans-serif;
+			height: 100%;
+			margin: 0;
 		}
 
         #canvas-container {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden; /* Ensure the container does not overflow */
         }
 
 		main {
@@ -81,12 +78,7 @@
 			-ms-user-select: none;
 			user-select: none;
 		}
-		
-		@media (max-width: 550px) {
-			span {
-				font-size: 30px;
-			}
-		}
+
 	</style>
 </head>
 <body>
@@ -99,21 +91,26 @@
 	<span>//work in progress</span>	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
-		// Select the canvas container
-		const container = document.getElementById('canvas-container');
+        // Select the canvas container
+        const container = document.getElementById('canvas-container');
 
         // Initialize the scene, camera, and renderer
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
-		container.appendChild(renderer.domElement);
-        //document.body.appendChild(renderer.domElement);
+        container.appendChild(renderer.domElement); // Attach canvas to the container
 
         // Create materials for the helix strands (red, white, green)
-        const redMaterial = new THREE.MeshBasicMaterial({ color: 0xee2a35 });
+        const redMaterial = new THREE.MeshBasicMaterial({ color: 0xEE2A35 });
         const whiteMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
         const greenMaterial = new THREE.MeshBasicMaterial({ color: 0x009736 });
+
+        // Create a parent object to hold the helix and apply the z-axis rotation
+        const helixGroup = new THREE.Object3D(); // Parent object for the helix
+        const rotationGroup = new THREE.Object3D(); // Object for visual rotation
+        scene.add(rotationGroup);
+        rotationGroup.add(helixGroup); // Rotate this for the 30-degree effect
 
         // Parameters for the helix
         const helixRadius = 1;
@@ -126,14 +123,14 @@
             const geometry = new THREE.SphereGeometry(0.05, 32, 32);
             const sphere = new THREE.Mesh(geometry, material);
             sphere.position.set(x, y, z);
-            scene.add(sphere);
+            helixGroup.add(sphere); // Add sphere to the helix group
         }
 
         // Function to create the triple helix
         function createHelix() {
             for (let i = 0; i < numPoints; i++) {
                 const angle = i * 0.2; // Angle to control rotation of the helix
-                const y = i * helixSpacing - 2; // Move up along the Y-axis
+                const y = i * helixSpacing - 1.5; // Move up along the Y-axis
 
                 // Calculate positions for the three strands
                 const x1 = helixRadius * Math.cos(angle); // Red strand
@@ -155,16 +152,28 @@
         // Call the function to generate the helix
         createHelix();
 
-        // Position the camera closer to the helix and slightly angled
-        camera.position.x = -2;
+        // Position the camera to look at the helix perpendicularly
+        camera.position.x = 0;
         camera.position.y = 5;
-        camera.position.z = 10;
-        camera.lookAt(0, 5, 0); // Focus on the middle of the helix
+        camera.position.z = 11;
+		
+        // Apply the 30-degree clockwise rotation around the z-axis to the rotation group
+        rotationGroup.rotation.z = -THREE.MathUtils.degToRad(20);
+		rotationGroup.rotation.y = -THREE.MathUtils.degToRad(20);
 
-        // Rotation animation
+		// Function to dynamically update translation based on viewport width
+		function updateTranslation() {
+            const vw = window.innerWidth;
+            const translation = -0.40 * vw; // Translate by -40vw
+
+            // Adjust the camera's lookAt x-value based on the translation
+            camera.lookAt(-translation / 70, 5, translation / 100);
+        }
+
+        // Rotation animation for the helix around its own y-axis
         function animate() {
             requestAnimationFrame(animate);
-            scene.rotation.y += 0.01; // Rotate around the Y-axis
+            helixGroup.rotation.y += 0.01; // Rotate the helix group around its own Y-axis
             renderer.render(scene, camera);
         }
 
@@ -178,7 +187,11 @@
             renderer.setSize(width, height);
             camera.aspect = width / height;
             camera.updateProjectionMatrix();
+			updateTranslation();
         });
+
+		updateTranslation();
+
     </script>
 </body>
 
