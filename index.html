@@ -11,25 +11,27 @@
 			font-family: 'Avenir Next','Segoe ui',sans-serif;
 			height: 100%;
 			margin: 0;
+			display: flex;
+			flex-direction: column;
 		}
 
         #canvas-container {
             position: fixed;
         }
 
-		main {
+		.content-container {
 			display: flex;
-			position: absolute;
 			flex-direction: column;
 			width: 240px;
-			margin: 1em;
+			margin-top: 1em;
+			margin-left: 1em;
 			padding: 1em;
 			z-index: 1;
 			background-color: rgba(0, 0, 0, 0.8);
 			border-radius: 1em;
 		}
 
-		h1 {
+		#my-name {
 			margin-top: 0;
 			margin-bottom: 1.5rem;
 			color: white;
@@ -38,7 +40,7 @@
 			letter-spacing: 1px;
 		}
 
-		a {
+		.url-button {
 			height: 40px;
 			margin-bottom: 1rem;
 			color: grey;
@@ -53,17 +55,24 @@
 			transition: color 120ms;
 		}
 
-		a:hover {
+		.url-button:hover {
 			color: white;
 		}
 
-		a:active {
+		.url-button:active {
 			color: grey;
 		}
 
-		span {
+		#bio-container {
+			width: 90%;
+			max-width: 500px;
+			font-size: 15px;
+			gap: 15px;
+		}
+
+		#wip {
 			position: absolute;
-			margin-top: 8em;
+			margin-top: 17em;
 			margin-left: 1em;
 			z-index: 0;
 			white-space: nowrap;
@@ -83,23 +92,32 @@
 </head>
 <body>
 	<div id="canvas-container"></div>
-	<main>
-		<h1>Faiz Ansari</h1>
-		<a href="files/Resume-Faiz-Ansari.pdf" target="_blank">my handcrafted <strong>Resume</strong></a>
-		<a href="https://github.com/fezimsorry" target="_blank">a <strong>GitHub</strong> w/ no signs of life</a>
-		<a href="https://www.imdb.com/name/nm11636236/" target="_blank">I'm on <strong>IMDb</strong> somehow</a>
+	<main class="content-container" id="main-container">
+		<h1 id="my-name">Faiz Ansari</h1>
+		<a href="files/Resume-Faiz-Ansari.pdf" target="_blank" class="url-button">my handcrafted <strong>Resume</strong></a>
+		<a href="https://github.com/fezimsorry" target="_blank" class="url-button">a <strong>GitHub</strong> w/ no signs of life</a>
+		<a href="https://www.imdb.com/name/nm11636236/" target="_blank" class="url-button" style="margin-bottom: 0.23em;">I'm on <strong>IMDb</strong> somehow</a>
 	</main>
-	<span>//work in progress</span>	
+	<div class="content-container" id="bio-container">
+		<span><b>Welcome!</b> I write lines on a screen to tell computers what to do - or more colloquially, I’m a software engineer …and my family’s tech support.</span>
+		<span>At my core, I’m driven by two questions: “what can this do?” and “what can be achieved with this?”. This curiosity to discover and experiment, along with my drive to create, is what fuels everything I do. As such, my work spans a broad area of development, ranging from full-stack engineering, to machine learning, statistical models, 3D experiences, and game development</span>
+		<span>Luckily, my inner perfectionist ensures that this broad scope of activities does not come at the expense of quality. I am obsessed with making things beautiful, not just visually, but in efficiency, function, and experience.</span>
+		<span>Say hi at <a href="mailto:connect@faiz.page">connect@faiz.page</a></span>
+	</div>
+	<span id="wip" >//work in progress</span>	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
+		const maxWindowWidth = 3000
         // Select the canvas container
         const container = document.getElementById('canvas-container');
 
         // Initialize the scene, camera, and renderer
         const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+		//scene.background = new THREE.Color(0x001f3f); // Dark Blue
+
+		const camera = new THREE.PerspectiveCamera(75, Math.min(window.innerWidth, maxWindowWidth) / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer();
-        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setSize(Math.min(window.innerWidth, maxWindowWidth), window.innerHeight); // Limit width to 1500px
         container.appendChild(renderer.domElement); // Attach canvas to the container
 
         // Create materials for the helix strands (red, white, green)
@@ -164,7 +182,7 @@
 
 		// Function to dynamically update translation based on viewport width
 		function updateTranslation() {
-            const vw = window.innerWidth;
+            const vw = Math.min(window.innerWidth, maxWindowWidth); 
             const translation = -0.40 * vw; // Translate by -40vw
 
             // Adjust the camera's lookAt x-value based on the translation
@@ -183,7 +201,7 @@
 
         // Adjust canvas size on window resize
         window.addEventListener('resize', function() {
-            const width = window.innerWidth;
+            const width = Math.min(window.innerWidth, maxWindowWidth);
             const height = window.innerHeight;
             renderer.setSize(width, height);
             camera.aspect = width / height;
