@@ -34,12 +34,12 @@
 			z-index: 1;
 			background-color: rgba(0, 0, 0, 0.8);
 			border-radius: 1em;
+			position: relative;
 		}
 
 		#my-name {
 			margin-top: 0;
 			margin-bottom: 1.5rem;
-			color: white;
 			font-size: 30px;
 			font-weight: normal;
 			letter-spacing: 1px;
@@ -75,9 +75,22 @@
 			gap: 15px;
 		}
 
+		#projects-container {
+			width: 90%;
+			max-width: 500px;
+		}
+
+		#projects-title {
+			margin-top: 0;
+			margin-bottom: 1.5rem;
+			font-size: 22px;
+			font-weight: normal;
+			letter-spacing: 0.5px;
+		}
+
 		#wip {
 			position: absolute;
-			margin-top: 17em;
+			margin-top: 19em;
 			margin-left: 1em;
 			z-index: 0;
 			white-space: nowrap;
@@ -107,9 +120,18 @@
 		<span><b>Welcome!</b> I write lines on a screen to tell computers what to do - or more colloquially, I’m a software engineer …and my family’s tech support.</span>
 		<span>At my core, I’m driven by two questions: “what can this do?” and “what can be achieved with this?”. This curiosity to discover and experiment, along with my drive to create, is what fuels everything I do. As such, my work spans a broad area of development, ranging from full-stack engineering, to machine learning, statistical models, 3D experiences, and game development</span>
 		<span>Luckily, my inner perfectionist ensures that this broad scope of activities does not come at the expense of quality. I am obsessed with making things beautiful, not just visually, but in efficiency, function, and experience.</span>
+		<span>📍 Los Angeles, CA</span>
 		<span>Say hi at <a href="mailto:connect@faiz.page">connect@faiz.page</a></span>
 	</div>
-	<span id="wip" >//work in progress</span>	
+	<div class="content-container" id="projects-container">
+		<h1 id="projects-title">Some of my projects</h1>
+		<div class="project"></div>
+		<div class="project"></div>
+		<div class="project"></div>
+		<div class="project"></div>
+		<div class="project"></div>
+	</div>
+	<span id="wip" hidden>//work in progress</span>	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
 		const maxWindowWidth = 3000
