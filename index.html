@@ -27,10 +27,24 @@
 		.content-container {
 			display: flex;
 			flex-direction: column;
-			width: 240px;
+			width: 90%;
+			max-width: 240px;
 			margin-top: 1em;
 			margin-left: 1em;
 			padding: 1em;
+			z-index: 1;
+			background-color: rgba(0, 0, 0, 0.8);
+			border-radius: 1em;
+			position: relative;
+		}
+
+		.content-header {
+			width: 90%;
+			max-width: 240px;
+			margin-top: 1em;
+			margin-left: 1em;
+			padding: 1em;
+			padding-bottom: 0px;
 			z-index: 1;
 			background-color: rgba(0, 0, 0, 0.8);
 			border-radius: 1em;
@@ -69,24 +83,92 @@
 		}
 
 		#bio-container {
-			width: 90%;
 			max-width: 500px;
 			font-size: 15px;
 			gap: 15px;
 		}
 
 		#projects-container {
-			width: 90%;
-			max-width: 500px;
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			font-size: 14px;
+			gap: 20px;
+		}
+
+		.project {
+			max-width: 400px;
+			gap: 15px;
+		}
+
+		.project-description {
+			display: flex;
+			flex-direction: column;
+			gap: 15px;
 		}
 
 		#projects-title {
 			margin-top: 0;
-			margin-bottom: 1.5rem;
+			margin-bottom: 0;
 			font-size: 22px;
 			font-weight: normal;
 			letter-spacing: 0.5px;
 		}
+
+		.project-name {
+			margin-top: 0;
+			margin-bottom: 0;
+			font-size: 18px;
+			font-weight: bold;
+			letter-spacing: 0.5px;
+		}
+
+		.project-stack {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+			gap: 8px;
+		}
+
+		.project-tech {
+			height: fit-content;
+			width: fit-content;
+			font-size: 12px;
+			padding: 3px 7px;
+			color: mediumaquamarine;
+			border: 1px solid;
+			border-radius: 4px;
+			box-sizing: border-box;
+			text-align: center;
+		}
+
+		.project-links {
+			margin-top: 7px;
+			margin-bottom: 7px;
+		}
+
+		.project-link-button {
+			height: fit-content;
+			width: fit-content;
+			font-size: 14px;
+			padding: 5px 20px;
+			color: grey;
+			border: 1px solid;
+			border-radius: 4px;
+			box-sizing: border-box;
+			text-align: center;
+			transition: color 120ms;
+			cursor: pointer;
+			text-decoration: none;
+		}
+
+		.project-link-button:hover {
+			color: white;
+		}
+
+		.project-link-button:active {
+			color: grey;
+		}		
 
 		#wip {
 			position: absolute;
@@ -122,13 +204,40 @@
 		<span>Luckily, my inner perfectionist ensures that this broad scope of activities does not come at the expense of quality. I am obsessed with making things beautiful, not just visually, but in efficiency, function, and experience.</span>
 		<span>Say hi at <a href="mailto:connect@faiz.page">connect@faiz.page</a></span>
 	</div>
-	<div class="content-container" id="projects-container">
-		<h1 id="projects-title">Some of my projects</h1>
-		<div class="project"></div>
-		<div class="project"></div>
-		<div class="project"></div>
-		<div class="project"></div>
-		<div class="project"></div>
+	<div class="content-header">
+		<h1 id="projects-title">Some of my work</h1>
+	</div>
+	<div id="projects-container">
+		<div class="content-container project">
+			<h1 class="project-name">Virtual Cloud Network</h1>
+			<div class="project-description">
+				<span>A client-facing SaaS application for spinning up remote computational resources à la GCP or AWS, with a focus towards the film and VFX industry. I built this to utilize an investment of GPUs and PowerEdge servers by Filmtools. Aims to fulfill the foundational principles of MovieLabs' <a href="https://movielabs.com/production-technology/the-2030-vision/">2030 Vision Initiative</a>. As such, prioritizes scalability, reliability, security, and performance.</span>
+				<span>The servers, equipped with healthy amounts of RAM and GPUs, were turned into KVM hypervisors to source virtual machines to the end-users in a cloud-like fashion. A custom-built REST-API in Express.js handled user requests, leveraging AD and libvirt to manage the network of VMs. A customized configuration of hardware and software could thus be delivered to the client over a low-latency Parsec stream.</span>	
+			</div>
+			<div class="project-stack">
+				<div class="project-tech">Node.js</div>
+				<div class="project-tech">Express.js</div>
+				<div class="project-tech">PowerShell</div>
+				<div class="project-tech">Active Directory</div>
+				<div class="project-tech">libvirt</div>
+				<div class="project-tech">Auth0</div>
+			</div>
+			<div class="project-links">
+				<a href="https://youtu.be/JZ0YT_dNXtA" target="_blank" class="project-link-button">Watch Demo</a>
+			</div>
+		</div>
+		<div class="content-container project">
+			<h1 class="project-name">Live Remote Editorial</h1>
+		</div>
+		<div class="content-container project">
+			<h1 class="project-name">The Path Ahead</h1>
+		</div>
+		<div class="content-container project">
+			<h1 class="project-name">Q-Learning Atari Breakout</h1>
+		</div>
+		<div class="content-container project">
+			<h1 class="project-name">NavMesh Pathfinding</h1>
+		</div>
 	</div>
 	<span id="wip" hidden>//work in progress</span>	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
