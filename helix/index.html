@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Helix</title>
+
+	<style type="text/css">
+		html, body {
+			background-color: black;
+			font-family: 'Avenir Next','Segoe ui',sans-serif;
+			height: 100%;
+			margin: 0;
+			display: flex;
+			flex-direction: column;
+			color: white;
+		}
+
+        #canvas-container {
+            position: fixed;
+        }
+	</style>
+</head>
+<body>
+	<div id="canvas-container"></div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+		const maxWindowWidth = 3000
+        // Select the canvas container
+        const container = document.getElementById('canvas-container');
+
+        // Initialize the scene, camera, and renderer
+        const scene = new THREE.Scene();
+		//scene.background = new THREE.Color(0x001f3f); // Dark Blue
+
+		const camera = new THREE.PerspectiveCamera(75, Math.min(window.innerWidth, maxWindowWidth) / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(Math.min(window.innerWidth, maxWindowWidth), window.innerHeight); // Limit width to 1500px
+        container.appendChild(renderer.domElement); // Attach canvas to the container
+
+        // Create materials for the helix strands (red, white, green)
+        const redMaterial = new THREE.MeshBasicMaterial({ color: 0xEE2A35 });
+        const whiteMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+        const greenMaterial = new THREE.MeshBasicMaterial({ color: 0x009736 });
+
+        // Create a parent object to hold the helix and apply the z-axis rotation
+        const helixGroup = new THREE.Object3D(); // Parent object for the helix
+        const rotationGroup = new THREE.Object3D(); // Object for visual rotation
+        scene.add(rotationGroup);
+        rotationGroup.add(helixGroup); // Rotate this for the 30-degree effect
+
+        // Parameters for the helix
+        const helixRadius = 1;
+        const helixHeight = 0.2;
+        const numPoints = 200; // Points per strand
+        const helixSpacing = 0.15; // Spacing between helix loops
+
+        // Function to create a sphere at a given position
+        function createSphere(material, x, y, z) {
+            const geometry = new THREE.SphereGeometry(0.05, 32, 32);
+            const sphere = new THREE.Mesh(geometry, material);
+            sphere.position.set(x, y, z);
+            helixGroup.add(sphere); // Add sphere to the helix group
+        }
+
+        // Function to create the triple helix
+        function createHelix() {
+            for (let i = 0; i < numPoints; i++) {
+                const angle = i * 0.2; // Angle to control rotation of the helix
+                const y = i * helixSpacing - 3; // Move up along the Y-axis
+
+                // Calculate positions for the three strands
+                const x1 = helixRadius * Math.cos(angle); // Red strand
+                const z1 = helixRadius * Math.sin(angle);
+
+                const x2 = helixRadius * Math.cos(angle + Math.PI * 2 / 3); // White strand
+                const z2 = helixRadius * Math.sin(angle + Math.PI * 2 / 3);
+
+                const x3 = helixRadius * Math.cos(angle + (Math.PI * 4) / 3); // Green strand
+                const z3 = helixRadius * Math.sin(angle + (Math.PI * 4) / 3);
+
+                // Create spheres for each position in the triple helix
+                createSphere(redMaterial, x1, y, z1);
+                createSphere(whiteMaterial, x2, y, z2);
+                createSphere(greenMaterial, x3, y, z3);
+            }
+        }
+
+        // Call the function to generate the helix
+        createHelix();
+
+        // Position the camera to look at the helix perpendicularly
+        camera.position.x = 0;
+        camera.position.y = 5;
+        camera.position.z = 11;
+		
+        // Apply the 30-degree clockwise rotation around the z-axis to the rotation group
+        rotationGroup.rotation.z = -THREE.MathUtils.degToRad(20);
+		rotationGroup.rotation.y = -THREE.MathUtils.degToRad(20);
+
+        // Variables to handle controls
+        let isDragging = false;
+        let isRightClickDragging = false;
+        let previousMousePosition = { x: 0, y: 0 };
+        const zoomSpeed = 0.1;
+        const rotationSpeed = 0.005;
+        const translationSpeed = 0.005;
+
+        // Handle mouse wheel zoom
+        container.addEventListener('wheel', function(event) {
+            const zoomDelta = event.deltaY * zoomSpeed;
+            camera.position.z += zoomDelta;
+            camera.position.z = Math.max(2, Math.min(camera.position.z, 50)); // Restrict zoom range
+        });
+
+        // Handle mouse down event
+        container.addEventListener('mousedown', function(event) {
+            if (event.button === 0) { // Left mouse button for rotation
+                isDragging = true;
+            } else if (event.button === 2) { // Right mouse button for translation
+                isRightClickDragging = true;
+            }
+            previousMousePosition = { x: event.clientX, y: event.clientY };
+        });
+
+        // Handle mouse move event
+        container.addEventListener('mousemove', function(event) {
+            const deltaX = event.clientX - previousMousePosition.x;
+            const deltaY = event.clientY - previousMousePosition.y;
+
+            if (isDragging) { // Rotation with left click drag
+                rotationGroup.rotation.y += deltaX * rotationSpeed;
+                rotationGroup.rotation.x += deltaY * rotationSpeed;
+            }
+
+            if (isRightClickDragging) { // Translation with right click drag
+                camera.position.x -= deltaX * translationSpeed;
+                camera.position.y += deltaY * translationSpeed;
+            }
+
+            previousMousePosition = { x: event.clientX, y: event.clientY };
+        });
+
+        // Handle mouse up event
+        container.addEventListener('mouseup', function(event) {
+            isDragging = false;
+            isRightClickDragging = false;
+        });
+
+        // Prevent right click context menu
+        container.addEventListener('contextmenu', function(event) {
+            event.preventDefault();
+        });
+
+		// Function to dynamically update translation based on viewport width
+		function updateTranslation() {
+            const vw = Math.min(window.innerWidth, maxWindowWidth); 
+            const translation = -0.40 * vw; // Translate by -40vw
+
+            // Adjust the camera's lookAt x-value based on the translation
+            camera.lookAt(-translation / 70, 5, translation / 100);
+        }
+
+        // Rotation animation for the helix around its own y-axis
+        function animate() {
+            requestAnimationFrame(animate);
+            helixGroup.rotation.y += 0.01; // Rotate the helix group around its own Y-axis
+            renderer.render(scene, camera);
+        }
+
+        // Start the animation loop
+        animate();
+
+        // Adjust canvas size on window resize
+        window.addEventListener('resize', function() {
+            const width = Math.min(window.innerWidth, maxWindowWidth);
+            const height = window.innerHeight;
+            renderer.setSize(width, height);
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+			updateTranslation();
+        });
+
+		updateTranslation();
+
+    </script>
+</body>
+
+</html>
