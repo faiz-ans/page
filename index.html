@@ -179,6 +179,23 @@
 			gap: 15px;
 		}
 
+		.video-container {
+			position: relative;
+			width: 100%;
+			max-width: 560px; /* Optional: limit the max width */
+			padding-bottom: 56.25%; /* Aspect ratio 16:9 */
+			height: 0;
+			overflow: hidden;
+		}
+		
+		.video-container iframe {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+		}
+
 		#wip {
 			position: absolute;
 			margin-top: 19em;
@@ -219,7 +236,9 @@
 	<article id="projects-container">
 		<div class="content-container project">
 			<h1 class="project-name">Virtual Cloud Network</h1>
-			<iframe width="350" height="197" src="https://www.youtube.com/embed/JZ0YT_dNXtA?si=UtQDNpjiVUuJ5HZx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+			<div class="video-container">
+				<iframe width="350" height="197" src="https://www.youtube.com/embed/JZ0YT_dNXtA?si=UtQDNpjiVUuJ5HZx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+			</div>
 			<div class="project-description">
 				<span>A client-facing service for spinning up remote computational resources à la GCP or AWS; geared towards high-performance rendering. I built this to utilize an investment of GPUs and PowerEdge servers by Filmtools. Aims to strandardize Animation and VFX production in fulfillment of the foundational principles of MovieLabs' <a href="https://movielabs.com/production-technology/the-2030-vision/">2030 Vision Initiative</a>. As such, this was built with an emphasis on scalability, reliability, security, and user experience.</span>
 			</div>
@@ -252,7 +271,9 @@
 		</div>
 		<div class="content-container project">
 			<h1 class="project-name">The Path Ahead</h1>
-			<iframe width="350" height="197" src="https://www.youtube.com/embed/LLR0fIQHqvc?si=gMKA0-5lRHLCM261" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+			<div class="video-container">
+				<iframe width="350" height="197" src="https://www.youtube.com/embed/LLR0fIQHqvc?si=gMKA0-5lRHLCM261" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+			</div>
 			<div class="project-description">
 				<span><i>The Path Ahead</i> is an interactive 3D/VR experience; a dystopic visualization the themes and symbolism of Octavia Butler's <i>Parable of the Sower</i>, showcasing Erik Loyer's <a href="https://erikloyer.com/index.php/projects/detail/i-was-a-ship-in-space">"Text+Terrain" toolkit</a>, as an academic collaboratory for USC's Ahmanson Lab. I engineered and designed the player control, physics, proceedurally generated terrain, volumetric particle fog, weather effects, crowd simulation AI, and many other core mechanics.</span>
 			</div>
@@ -303,7 +324,9 @@
 		<span>In my free time I train calisthenics, play the drums, tend to my plants, skateboard, volunteer, and most recently, I'm writing a script for a dramedy short-film about the human experience. Oh, and feed three cats!</span>
 		<span>Throughout 2023, back home in Karachi, I volunteered at a music-therapy school that served the community on a pro-bono basis. My time there involved mentoring students on the drums (occasionally with guitar too), or being a source for emotional support/guidance, depending on the unique needs of each student.</span>
 		<span>Here's one of my last jams at the school, alongside another staff member and two students. That's me on the drums.</span>
-		<iframe width="560" height="315" src="https://www.youtube.com/embed/4TK-0J9xj5w?si=LcxvgFhLwsweUozq" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+		<div class="video-container">
+			<iframe width="560" height="315" src="https://www.youtube.com/embed/4TK-0J9xj5w?si=LcxvgFhLwsweUozq" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+		</div>
 	</article>
 	<span id="wip" hidden>//work in progress</span>	
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
