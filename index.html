@@ -60,7 +60,7 @@
 
 		#my-name {
 			margin-top: 0;
-			margin-bottom: 1.5rem;
+			margin-bottom: 0;
 			font-size: 30px;
 			font-weight: normal;
 			letter-spacing: 1px;
@@ -224,15 +224,69 @@
 			user-select: none;
 		}
 
+		.profile-pic {
+			width: 86px; /* Adjust the size as needed */
+			height: 86px; /* The same value as width to make it a square */
+			border-radius: 50%; /* This makes the image circular */
+			object-fit: cover; /* Ensures the image is not stretched */
+		}
+
+		#name-container {
+			display: flex;
+			flex-direction: row;
+			gap: 25px;
+			align-items: center;
+		}
+
+		#name-containner-inner {
+			display: flex;
+			flex-direction: column;
+			gap: 12px;
+		}
+
+		#social-icons {
+			display: flex; 
+			flex-direction: row;
+			align-items: center;
+			gap: 15px;
+		}
+
+		#social-icons img {
+			width: 32px;
+			opacity: 0.5;
+			transition: opacity 250ms ease;
+		}
+
+		#social-icons img:hover {
+			opacity: 1;
+			cursor: pointer;
+		}
+
 	</style>
 </head>
 <body>
 	<div id="canvas-container"></div>
 	<main class="content-container" id="main-container">
-		<h1 id="my-name">Faiz Ansari</h1>
-		<a href="files/Resume.pdf" target="_blank" class="url-button"><strong>Resume</strong>, my <i>artisanal</i> PDF</a>
-		<a href="https://github.com/fezimsorry" target="_blank" class="url-button">A thriving wasteland: <strong>GitHub</strong></a>
-		<a href="https://www.imdb.com/name/nm11636236/" target="_blank" class="url-button" style="margin-bottom: 0.23em;">I'm on <strong>IMDb</strong> somehow</a>
+		<div id="name-container">
+			<img src="img/dp.png" alt="Profile Picture" class="profile-pic">
+			<div id="name-containner-inner">
+				<h1 id="my-name">Faiz Ansari</h1>
+				<div id="social-icons">
+					<a href="files/Resume.pdf" target="_blank">
+						<img src="img/resume.png" style="width: 30px; height: 30px;" alt="Resume">
+					</a>
+					<a href="https://www.linkedin.com/in/faiz-ansari-0b20a4337/" target="_blank">
+						<img src="img/linkedin.png" style="width: 30px; height: 30px;">
+					</a>
+					<a href="https://github.com/fezimsorry" target="_blank">
+						<img src="img/github.png">
+					</a>
+					<a href="https://www.imdb.com/name/nm11636236/" target="_blank">
+						<img src="img/imdb.png" style="width: 48px; height: 24px;">
+					</a>
+				</div>
+			</div>
+		</div>
 	</main>
 	<article class="content-container" id="bio-container">
 		<span><b>Welcome!</b> I write lines on a screen to tell computers what to do - or more colloquially, I’m a software engineer …and my family’s tech support.</span>
@@ -347,7 +401,7 @@
 		</div>
 	</article>
 	<div class="content-header">
-		<h1 id="projects-title">Me, beyond the work</h1>
+		<h1 id="projects-title">Beyond the work</h1>
 	</div>
 	<article class="content-container" id="extra-container">
 		<span>I like to spend my time practicing calisthenics, playing the drums, tending to my plants, skateboarding, and most recently, script-writing for a short satire about the human experience. Oh, and obey the wills of three cats!</span>

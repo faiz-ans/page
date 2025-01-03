@@ -19,11 +19,27 @@
         #canvas-container {
             position: fixed;
         }
+
+        #controls {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 100;
+            height: fit-content;
+            width: fit-content;
+        }
 	</style>
 </head>
 <body>
 	<div id="canvas-container"></div>
+    <div id="controls">
+        <button id="startCapture">Start Capture</button>
+        <button id="stopCapture">Stop Capture</button>
+    </div>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ccapture.js@1.1.0/build/CCapture.all.min.js"></script>
+
+
     <script>
 		const maxWindowWidth = 3000
         // Select the canvas container
@@ -161,12 +177,63 @@
             camera.lookAt(-translation / 70, 5, translation / 100);
         }
 
+        const capturer = new CCapture({ format: 'webm', framerate: 60 });
+        let capturing = false;
+
+        // Create an offscreen canvas to crop the main canvas
+        const cropCanvas = document.createElement('canvas');
+        const cropContext = cropCanvas.getContext('2d');
+
+        function captureCroppedFrame() {
+            // Set portrait orientation (e.g., 1080x1920 for 9:16 aspect ratio)
+            const outputWidth = 1080;
+            const outputHeight = 1920;
+
+            // Set the crop area (20% to 50% of the canvas width)
+            const canvasWidth = renderer.domElement.width;
+            const canvasHeight = renderer.domElement.height;
+            const cropStartX = canvasWidth * 0.17;  // Start at 20% width
+            const cropWidth = canvasWidth * 0.33;   // Capture 30% of the width
+            const cropHeight = canvasHeight;       // Capture the full height
+
+            // Set the offscreen canvas size to portrait dimensions
+            cropCanvas.width = outputWidth;
+            cropCanvas.height = outputHeight;
+
+            // Draw the cropped portion of the original canvas onto the offscreen canvas
+            cropContext.drawImage(
+                renderer.domElement,
+                cropStartX, 0, cropWidth, cropHeight,   // Crop from the original canvas
+                0, 0, outputWidth, outputHeight        // Scale into portrait dimensions
+            );
+
+            // Capture the cropped area using CCapture
+            capturer.capture(cropCanvas);
+        }
+
         // Rotation animation for the helix around its own y-axis
         function animate() {
             requestAnimationFrame(animate);
             helixGroup.rotation.y += 0.01; // Rotate the helix group around its own Y-axis
             renderer.render(scene, camera);
+
+            // Capture each frame if recording is active
+            if (capturing) {
+                captureCroppedFrame();
+            }
         }
+
+        // Event listeners for starting and stopping capture
+        document.getElementById('startCapture').addEventListener('click', function() {
+            capturer.start();
+            capturing = true;
+        });
+
+        document.getElementById('stopCapture').addEventListener('click', function() {
+            capturing = false;
+            capturer.stop();
+            capturer.save();  // Saves the video to the browser's download
+        });
 
         // Start the animation loop
         animate();
