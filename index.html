@@ -155,8 +155,8 @@
 		}
 
 		.project-links {
-			margin-top: 7px;
-			margin-bottom: 7px;
+			display: flex;
+			gap: 15px;
 		}
 
 		.project-link-button {
@@ -180,7 +180,21 @@
 
 		.project-link-button:active {
 			color: grey;
-		}		
+		}
+		
+		.project-link-button img {
+			width: 15px;
+			padding-right: 8px;
+			padding-bottom: 5px;
+			opacity: 0.5;
+			vertical-align: middle;
+			transition: opacity 120ms ease;
+		}
+
+		.project-link-button:hover img {
+			opacity: 1;
+			cursor: pointer;
+		}
 
 		#extra-container {
 			margin-bottom: 15px;
@@ -313,7 +327,9 @@
 				<div class="project-tech">Auth0</div>
 			</div>
 			<div class="project-links">
-				<a href="https://youtu.be/JZ0YT_dNXtA" target="_blank" class="project-link-button">Watch Demo</a>
+				<a href="github.com/faiz-ans/cloud-render-api" target="_blank" class="project-link-button">
+					<img src="img/github.png" alt="Link to GitHub">View Source
+				</a>
 			</div>
 		</div>
 		<div class="content-container project">
@@ -329,7 +345,9 @@
 				<div class="project-tech">RealtimeMeshComponent</div>
 			</div>
 			<div class="project-links">
-				<a href="https://github.com/faiz-ans/mesh-extract" target="_blank" class="project-link-button">View Repo</a>
+				<a href="https://github.com/faiz-ans/mesh-extract" target="_blank" class="project-link-button">
+					<img src="img/github.png" alt="Link to GitHub">View Source
+				</a>
 			</div>
 		</div>
 		<div class="content-container project">
@@ -345,7 +363,9 @@
 				<div class="project-tech">VDO Ninja</div>
 			</div>
 			<div class="project-links">
-				<a href="https://filmtoolscloud.github.io/review/" target="_blank" class="project-link-button">Live Demo</a>
+				<a href="https://github.com/faiz-ans/remote-editorial" target="_blank" class="project-link-button">
+					<img src="img/github.png" alt="Link to GitHub">View Source
+				</a>
 			</div>
 		</div>
 		<div class="content-container project">
@@ -363,7 +383,12 @@
 				<div class="project-tech">Agile</div>
 			</div>
 			<div class="project-links">
-				<a href="https://polymathic.usc.edu/ahmanson-lab/california-text-terrain-visualizing-ideology-and-environment" target="_blank" class="project-link-button">View Collaboratory / Download</a>
+				<a href="https://polymathic.usc.edu/ahmanson-lab/california-text-terrain-visualizing-ideology-and-environment" target="_blank" class="project-link-button">
+					<img src="img/external-link.png" alt="Link to GitHub">Download
+				</a>
+				<a href="https://github.com/faiz-ans/the-path-ahead" target="_blank" class="project-link-button">
+					<img src="img/github.png" alt="Link to GitHub">View Source
+				</a>
 			</div>
 		</div>
 		<div class="content-container project">
@@ -379,7 +404,7 @@
 				<div class="project-tech">Jupyter</div>
 			</div>
 			<div class="project-links">
-				<a href="files/reinforcement.pdf" target="_blank" class="project-link-button">Notebook + Training Logs</a>
+				<a href="files/reinforcement.pdf" target="_blank" class="project-link-button">Source + Training Logs</a>
 			</div>
 		</div>
 		<div class="content-container project">
@@ -394,12 +419,14 @@
 				<div class="project-tech">NevMeshComponents</div>
 			</div>
 			<div class="project-links">
-				<a href="https://github.com/faiz-ans/NavMesh_Tutorial" target="_blank" class="project-link-button">View Repo</a>
+				<a href="https://github.com/faiz-ans/NavMesh_Tutorial" target="_blank" class="project-link-button">
+					<img src="img/github.png" alt="Link to GitHub">View Source
+				</a>
 			</div>
 		</div>
 	</article>
 	<div class="content-header">
-		<h1 id="projects-title">Me, IRL</h1>
+		<h1 id="projects-title">Me IRL</h1>
 	</div>
 	<article class="content-container" id="extra-container">
 		<span>I enjoy practicing calisthenics, tending to my plants, skateboarding, and most recently, script-writing a satire about the human experience. Oh, and obeying the wills of my rescued cat and rabbit!</span>
